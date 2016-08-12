@@ -1,6 +1,20 @@
 class NavbarController {
-  constructor() {
-    this.name = 'navbar';
+
+  constructor($state) {
+    'ngInject';
+    class Item {
+      constructor(route, name){
+        this.route = route;
+        this.name = name;
+      }
+      isActive(){
+        return $state.includes(this.route);
+      }
+    }
+    this.items = [
+      new Item('home', 'Home'),
+      new Item('about', 'About')
+    ];
   }
 }
 

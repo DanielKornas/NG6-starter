@@ -1,16 +1,16 @@
-import NavbarModule from './navbar'
+import NavbarModule from './navbar';
 
 describe('Navbar', () => {
-  let $rootScope, $state, $location, $componentController, $compile;
+  let $rootScope, $state, $location, $componentController, $compile, $document;
 
   beforeEach(window.module(NavbarModule));
-
   beforeEach(inject(($injector) => {
     $rootScope = $injector.get('$rootScope');
     $componentController = $injector.get('$componentController');
     $state = $injector.get('$state');
     $location = $injector.get('$location');
     $compile = $injector.get('$compile');
+    $document= $injector.get('$document');
   }));
 
   describe('Module', () => {
@@ -26,24 +26,29 @@ describe('Navbar', () => {
       });
     });
 
-    it('has a name property', () => { // erase if removing this.name from the controller
-      expect(controller).to.have.property('name');
+    it('has items property', () => { // erase if removing this.name from the controller
+      expect(controller).to.have.property('items');
     });
   });
 
   describe('View', () => {
     // view layer specs.
-    let scope, template;
+    let scope, template, controller, body;
 
     beforeEach(() => {
       scope = $rootScope.$new();
-      template = $compile('<navbar></navbar>')(scope);
+      body = angular.element($document[0].body);
+      template = body.empty().append($compile('<navbar></navbar>')(scope));
       scope.$apply();
+      controller = $componentController('navbar', {
+        $scope: $rootScope.$new()
+      });
     });
 
-    it('has name in template', () => {
-      expect(template.find('h1').find('a').html()).to.eq('navbar');
+    it('has rendered navigation items', () => {
+      expect(template.find('nav').find('li').length).to.eq(controller.items.length);
     });
+
 
   });
 });
