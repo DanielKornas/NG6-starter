@@ -13,7 +13,8 @@ class NavbarController {
     }
     this.items = [
       new Item('home', 'Home'),
-      new Item('about', 'About')
+      new Item('about', 'About'),
+      new Item('terms', 'T&C')
     ];
   }
 }

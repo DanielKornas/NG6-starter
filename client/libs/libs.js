@@ -1,2 +1,1 @@
-import 'normalize.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import bootstrap from 'bootstrap-loader';
